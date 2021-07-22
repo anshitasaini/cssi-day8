@@ -47,7 +47,7 @@ const findMessage = (myPass) => {
     });
 }
 
-document.querySelector("#viewMsg").addEventListener("click", () => {
+document.querySelector("#viewMsg").addEventListener("click", (e) => {
     const passcode = document.querySelector('#passcode').value;
     attempts += 1;
     findMessage(passcode);
