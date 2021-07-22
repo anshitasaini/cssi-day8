@@ -3,20 +3,8 @@ printMessage = document.querySelector('#message')
 another = document.querySelector("#another")
 messageContainer = document.querySelector("#messageContainer")
 
-const getMessages = () => {
-    const messagesRef = firebase.database().ref();
-    messagesRef.on('value', (snapshot) => {
-        const data = snapshot.val();
-        console.log(data)
-        for (let key in data) {
-            const message = data[key];
-            console.log(message);
-            if (myPass == message.passcode) {
-                renderMessageAsHTML(message);
-            }       
-        }
-    });
-
+function hash(pass) {
+    return new Hashes.MD5().hex(pass)
 }
 
 let attempts = 0;
@@ -26,11 +14,9 @@ const findMessage = (myPass) => {
     const messagesRef = firebase.database().ref();
     messagesRef.on('value', (snapshot) => {
         const data = snapshot.val();
-        console.log(data)
         for (let key in data) {
             const message = data[key];
-            console.log(message);
-            if (myPass == message.passcode) {
+            if (hash(myPass) == (message.passcode)) {
                 renderMessageAsHTML(message);
                 found += 1
             }     
